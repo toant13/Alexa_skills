@@ -1,0 +1,8 @@
+{
+  "name": "demo1",
+  "description": "demo1",
+  "memory": 128,
+  "timeout": 5,
+  "role": "arn:aws:iam::893483352847:role/demo1_lambda_function",
+  "environment": {}
+}
