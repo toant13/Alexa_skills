@@ -1,8 +1,8 @@
 {
-  "name": "demo1",
-  "description": "demo1",
+  "name": "Alexa_Time_Till_Event",
+  "description": "Gives the amount of time till asked event",
   "memory": 128,
   "timeout": 5,
-  "role": "arn:aws:iam::893483352847:role/demo1_lambda_function",
+  "role": "arn:aws:iam::893483352847:role/Alexa_Time_Till_Event_lambda_function",
   "environment": {}
 }
