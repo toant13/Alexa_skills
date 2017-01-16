@@ -1,9 +1,9 @@
 {
-  "name": "Alexa_Time_Till_Event",
-  "description": "Gives the amount of time till asked event",
+  "name": "NBA_Injury_Info_skill",
+  "description": "Gives list of injuries for team",
   "memory": 128,
   "timeout": 5,
-  "role": "arn:aws:iam::893483352847:role/Alexa_Time_Till_Event_lambda_function",
+  "role": "arn:aws:iam::893483352847:role/NBA_Injury_Info_Skill_lambda_function",
   "environment": {},
   "handler": "index.handler"
 }
