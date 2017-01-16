@@ -1,0 +1,17 @@
+{
+  "intents": [
+    {
+      "intent": "GetTeamInjuries",
+      "slots": [
+        {
+          "name": "team",
+          "type": "LIST_OF_NBA_TEAMS"
+        },
+        {
+          "name": "day",
+          "type": "AMAZON.DATE"
+        }
+      ]
+    }
+  ]
+}

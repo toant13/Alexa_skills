@@ -1,0 +1,2 @@
+GetTeamInjuries get me the injuries for {team}
+GetFirstEventIntent list me the injuries for {team}
