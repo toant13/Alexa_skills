@@ -1,11 +1,12 @@
 "use strict";
-const APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
-
-
+const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
 
 const Alexa = require("alexa-sdk");
+const https = require('https');
 
+
+const URL_BASE = 'https://www.fantasybasketballnerd.com/service/';
 
 
 exports.handler = function(event, context, callback) {
@@ -22,13 +23,13 @@ exports.handler = function(event, context, callback) {
 
 
 const handlers = {
-    'LaunchRequest': function () {
+    'LaunchRequest': function() {
         this.emit('GetInjuries');
     },
-    'GetTeamInjuries': function () {
+    'GetTeamInjuries': function() {
         this.emit('GetInjuries');
     },
-    'GetInjuries': function () {
+    'GetInjuries': function() {
         const team = this.event.request.intent.slots.team.value
 
         console.log('The given team is: ' + team);
@@ -40,3 +41,15 @@ const handlers = {
         this.emit(':tellWithCard', speechOutput, "American Space Facts", randomFact)
     }
 };
+
+function getSchedule(teamName, date) {
+
+}
+
+function getTeamInjuries(teamName) {
+
+}
+
+function getTeamDepthChart(teamName) {
+
+}
