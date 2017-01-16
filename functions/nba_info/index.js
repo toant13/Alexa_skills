@@ -9,9 +9,14 @@ const Alexa = require("alexa-sdk");
 
 
 exports.handler = function(event, context, callback) {
+    console.log('Received event:', JSON.stringify(event));
+
     var alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     alexa.registerHandlers(handlers);
+
+
+
     alexa.execute();
 };
 
@@ -25,6 +30,8 @@ const handlers = {
     },
     'GetInjuries': function () {
         const team = this.event.request.intent.slots.team.value
+
+        console.log('The given team is: ' + team);
 
         const randomFact = "The team is " + team;
 

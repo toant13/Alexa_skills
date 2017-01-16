@@ -1,0 +1,16 @@
+{
+  "name": "skill-nba-info",
+  "version": "1.0.0",
+  "description": "Give list of nba team info",
+  "main": "index.js",
+  "keywords": [
+    "alexa",
+    "skill",
+    "nba"
+  ],
+  "author": "Tony Tran",
+  "dependencies": {
+    "alexa-sdk": "^1.0.6",
+    "https":"^1.0.0"
+  }
+}
