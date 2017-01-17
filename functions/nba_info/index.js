@@ -145,12 +145,13 @@ function getTeamInjuries(inst, teamName, eventCallback) {
 }
 
 function parseInjuriesJson(inst, body, teamName, callback) {
-    const teamCode = getTeamCode(teamName);
-    console.log('parseInjuries team code is: ' + teamCode + ' for team code: ' + teamName);
+    const teamCode = getTeamCode(teamName);    
 
     if (!teamCode) {
         callback('Sorry I cannot find the team name you have given ' + teamName + ' please try again', inst);
     }
+
+    console.log('parseInjuries team code is: ' + teamCode + ' for team code: ' + teamName);
 
     parseString(body, function(err, result) {
         const teamsArray = result.FantasyBasketballNerd.Team;
@@ -167,7 +168,7 @@ function parseInjuriesJson(inst, body, teamName, callback) {
 
             callback('The ' + teamName + ' have the following injuries, ' + speechOutput, inst);
         } else {
-            callback('The ' teamName + ' do not have any injuries.', inst);
+            callback('The ' + teamName + ' do not have any injuries.', inst);
         }
     });
 }
