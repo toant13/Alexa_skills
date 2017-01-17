@@ -90,6 +90,14 @@ exports.handler = function(event, context, callback) {
 };
 
 
+function sonicsEasterEgg(inst, team) {
+    const teamNameLowerCase = team.toLowerCase();
+    if (teamNameLowerCase === 'seattle supersonics' || teamNameLowerCase === 'seattle sonics' || teamNameLowerCase === 'sonics') {
+        console.log('are supersonics');
+        inst.emit(':tellWithCard', 'ha-ha-ha-ha very funny. I miss the sonics so much.  Gary Payton is my favorite player of all time', "Sonic Easter Egg", 'sonics easter egg');
+    }
+}
+
 const handlers = {
     'LaunchRequest': function() {
         this.emit('GetInjuries');
@@ -101,12 +109,10 @@ const handlers = {
         const team = this.event.request.intent.slots.team.value
         console.log('The given team is: ' + team);
 
-        const randomFact = "The team is " + team;
-
-
+        sonicsEasterEgg(this, team);
 
         getTeamInjuries(this, team, (speechOutput, inst) => {
-            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", randomFact);
+            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", speechOutput);
         });
     }
 };
@@ -147,7 +153,7 @@ function getTeamInjuries(inst, teamName, eventCallback) {
 }
 
 function parseInjuriesJson(inst, body, teamName, callback) {
-    const teamCode = getTeamCode(teamName);    
+    const teamCode = getTeamCode(teamName);
 
     if (!teamCode) {
         callback('Sorry I cannot find the team name you have given ' + teamName + ' please try again', inst);
@@ -164,7 +170,7 @@ function parseInjuriesJson(inst, body, teamName, callback) {
 
         console.log('team object: ' + JSON.stringify(injuriesForTeam));
 
-        if(injuriesForTeam){
+        if (injuriesForTeam) {
             const playerTest = injuriesForTeam.Player[0].name;
             const speechOutput = formatInjurieSpeechOutput(injuriesForTeam.Player)
 
@@ -175,7 +181,7 @@ function parseInjuriesJson(inst, body, teamName, callback) {
     });
 }
 
-function formatInjurieSpeechOutput(playersArray){
+function formatInjurieSpeechOutput(playersArray) {
     let speechOutput = '';
     playersArray.forEach(function(player) {
         speechOutput += player.name[0] + ' with ' + player.injury[0] + ', '
