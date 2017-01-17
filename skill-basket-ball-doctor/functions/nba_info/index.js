@@ -65,7 +65,6 @@ const TEAM_CODE = {
     "portland trail blazers": "POR",
     "trail blazers": "POR",
     "blazers": "POR",
-    "blazers": "POR",
     "sacramento kings": "SAC",
     "kings": "SAC",
     "san antonio spurs": "SAS",
