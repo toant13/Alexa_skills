@@ -133,15 +133,24 @@ function parseInjuriesJson(inst, body, teamName, callback) {
         console.log('team object: ' + JSON.stringify(injuriesForTeam));
 
         if(injuriesForTeam){
-            console.log('Team injuries are: ' + JSON.stringify(injuriesForTeam.Player));
             const playerTest = injuriesForTeam.Player[0].name;
+            const speechOutput = formatInjurieSpeechOutput(injuriesForTeam.Player)
 
-            callback('This weak ass player ' + playerTest + ' is always freakin injured', inst);
+            callback('The ' + teamName + ' have the following injuries, ' + speechOutput, inst);
         } else {
-            console.log('injuriesForTeam was populated');    
             callback(teamName + ' does not have any injuries.', inst);
         }
     });
+}
+
+function formatInjurieSpeechOutput(playersArray){
+    let speechOutput = '';
+    playersArray.forEach(function(player) {
+        speechOutput += player.name[0] + ' with ' + player.injury[0] + ', '
+    });
+
+    console.log('speechOutput is: ' + speechOutput);
+    return speechOutput;
 }
 
 
