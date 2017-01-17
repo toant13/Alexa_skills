@@ -103,8 +103,10 @@ const handlers = {
 
         const randomFact = "The team is " + team;
 
+
+
         getTeamInjuries(this, team, (speechOutput, inst) => {
-            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", randomFact)
+            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", randomFact);
         });
     }
 };
