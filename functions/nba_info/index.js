@@ -1,5 +1,5 @@
 "use strict";
-const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
+const APP_ID = 'amzn1.ask.skill.a43030db-980d-4f62-8b87-463419f67670'
 
 
 const Alexa = require("alexa-sdk");
