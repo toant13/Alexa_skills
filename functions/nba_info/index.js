@@ -3,7 +3,10 @@ const APP_ID = undefined; // TODO replace with your app ID (OPTIONAL).
 
 
 const Alexa = require("alexa-sdk");
-let https = require('https');
+const https = require('https');
+const parseString = require('xml2js').parseString;
+const _ = require('lodash');
+
 
 
 const URL_BASE = 'https://www.fantasybasketballnerd.com/service/';
@@ -11,36 +14,36 @@ const URL_BASE = 'https://www.fantasybasketballnerd.com/service/';
 
 
 const TEAM_CODE = {
-    "Atlanta Hawks": "ATL",
-    "Brooklyn Nets": "BKN",
-    "Boston Celtics": "BOS",
-    "Charlotte Hornets": "CHA",
-    "Chicago Bulls": "CHI",
-    "Cleveland Cavaliers": "CLE",
-    "Dallas Mavericks": "DAL",
-    "Denver Nuggets": "DEN",
-    "Detroit Pistons": "DET",
-    "Golden State Warriors": "GSW",
-    "Houston Rockets": "HOU",
-    "Indiana Pacers": "IND",
-    "Los Angeles Clippers": "LAC",
-    "Los Angeles Lakers": "LAL",
-    "Memphis Grizzlies": "MEM",
-    "Miami Heat": "MIA",
-    "Milwaukee Bucks": "MIL",
-    "Minnesota Timberwolves": "MIN",
-    "New Orleans Pelicans": "NOP",
-    "New York Knicks": "NYK",
-    "Oklahoma City Thunder": "OKC",
-    "Orlando Magic": "ORL",
-    "Philadelphia 76ers": "PHI",
-    "Phoenix Suns": "PHX",
-    "Portland Trail Blazers": "POR",
-    "Sacramento Kings": "SAC",
-    "San Antonio Spurs": "SAS",
-    "Toronto Raptors": "TOR",
-    "Utah Jazz": "UTA",
-    "Washington Wizards": "WAS"
+    "atlanta hawks": "ATL",
+    "brooklyn nets": "BKN",
+    "boston celtics": "BOS",
+    "charlotte hornets": "CHA",
+    "chicago bulls": "CHI",
+    "cleveland cavaliers": "CLE",
+    "dallas mavericks": "DAL",
+    "denver nuggets": "DEN",
+    "detroit pistons": "DET",
+    "golden state warriors": "GSW",
+    "houston rockets": "HOU",
+    "indiana pacers": "IND",
+    "los angeles clippers": "LAC",
+    "los angeles lakers": "LAL",
+    "memphis grizzlies": "MEM",
+    "miami heat": "MIA",
+    "milwaukee bucks": "MIL",
+    "minnesota timberwolves": "MIN",
+    "new orleans pelicans": "NOP",
+    "new york knicks": "NYK",
+    "oklahoma city thunder": "OKC",
+    "orlando magic": "ORL",
+    "philadelphia 70 sixers": "PHI",
+    "phoenix suns": "PHX",
+    "portland Trail blazers": "POR",
+    "sacramento kings": "SAC",
+    "san antonio spurs": "SAS",
+    "toronto raptors": "TOR",
+    "utah jazz": "UTA",
+    "washington wizards": "WAS"
 }
 
 
@@ -51,9 +54,6 @@ exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     alexa.registerHandlers(handlers);
-
-
-
     alexa.execute();
 };
 
@@ -67,23 +67,12 @@ const handlers = {
     },
     'GetInjuries': function() {
         const team = this.event.request.intent.slots.team.value
-
         console.log('The given team is: ' + team);
-        // getTeamInjuries(team);
-
 
         const randomFact = "The team is " + team;
 
-        // Create speech output
-        const speechOutput = "Here's your fact: " + randomFact;
-        // this.emit(':tellWithCard', speechOutput, "American Space Facts", randomFact);
-    
-        getTeamInjuries(this, team, function(body, inst){
-
-
-            console.log('The eventCallback was called!');
-
-            inst.emit(':tellWithCard', speechOutput, "American Space Facts", randomFact)
+        getTeamInjuries(this, team, (speechOutput, inst) => {
+            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", randomFact)
         });
     }
 };
@@ -94,7 +83,7 @@ const handlers = {
 
 
 function getTeamCode(teamName) {
-    const teamCode = TEAM_CODE[teamName]
+    const teamCode = TEAM_CODE[teamName.toLowerCase()];
     return teamCode;
 }
 
@@ -104,13 +93,9 @@ function getSchedule(teamName, date) {
 }
 
 function getTeamInjuries(inst, teamName, eventCallback) {
-    console.log('teamCode is: ' + getTeamCode(teamName));
-
     var url = URL_BASE + 'injuries';
 
     console.log('url is: ' + url);
-
-
 
     https.get(url, function(res) {
         console.log('enters https get');
@@ -122,20 +107,41 @@ function getTeamInjuries(inst, teamName, eventCallback) {
             body += chunk;
         });
 
-        res.on('end', function() {
-            // var stringResult = parseJson(body);
-            // eventCallback(stringResult);
-            console.log('results are as following: ' + body);
-
-            eventCallback(body, inst);    
+        res.on('end', () => {
+            const speechOutput = parseInjuriesJson(inst, body, teamName, eventCallback);
         });
     }).on('error', function(e) {
-        console.log("Got error: ", e);
+        console.error('Got error: ' + e + ' trying to GET at: ' + url);
     });
 }
 
-function parseInjuriesJson(body) {
+function parseInjuriesJson(inst, body, teamName, callback) {
+    const teamCode = getTeamCode(teamName);
+    console.log('parseInjuries team code is: ' + teamCode + ' for team code: ' + teamName);
 
+    if (!teamCode) {
+        callback('Sorry I cannot find the team name you have given ' + teamName + ' please try again', inst);
+    }
+
+    parseString(body, function(err, result) {
+        const teamsArray = result.FantasyBasketballNerd.Team;
+
+        let injuriesForTeam = _.find(teamsArray, (currentObject) => {
+            return currentObject.$.code === teamCode;
+        });
+
+        console.log('team object: ' + JSON.stringify(injuriesForTeam));
+
+        if(injuriesForTeam){
+            console.log('Team injuries are: ' + JSON.stringify(injuriesForTeam.Player));
+            const playerTest = injuriesForTeam.Player[0].name;
+
+            callback('This weak ass player ' + playerTest + ' is always freakin injured', inst);
+        } else {
+            console.log('injuriesForTeam was populated');    
+            callback(teamName + ' does not have any injuries.', inst);
+        }
+    });
 }
 
 
