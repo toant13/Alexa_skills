@@ -1,2 +1,4 @@
 GetTeamInjuries get me the injuries for the {team}
 GetTeamInjuries list me the injuries for the {team}
+GetTeamInjuries list them for the {team}
+GetTeamInjuries who's injured on the {team}

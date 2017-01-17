@@ -15,35 +15,67 @@ const URL_BASE = 'https://www.fantasybasketballnerd.com/service/';
 
 const TEAM_CODE = {
     "atlanta hawks": "ATL",
+    "hawks": "ATL",
     "brooklyn nets": "BKN",
+    "nets": "BKN",
     "boston celtics": "BOS",
+    "celtics": "BOS",
     "charlotte hornets": "CHA",
+    "hornets": "CHA",
     "chicago bulls": "CHI",
+    "bulls": "CHI",
     "cleveland cavaliers": "CLE",
+    "cavaliers": "CLE",
     "dallas mavericks": "DAL",
+    "mavericks": "DAL",
     "denver nuggets": "DEN",
+    "nuggets": "DEN",
     "detroit pistons": "DET",
+    "pistons": "DET",
     "golden state warriors": "GSW",
+    "warriors": "GSW",
     "houston rockets": "HOU",
+    "rockets": "HOU",
     "indiana pacers": "IND",
+    "pacers": "IND",
     "los angeles clippers": "LAC",
+    "clippers": "LAC",
     "los angeles lakers": "LAL",
+    "lakers": "LAL",
     "memphis grizzlies": "MEM",
+    "grizzlies": "MEM",
     "miami heat": "MIA",
+    "heat": "MIA",
     "milwaukee bucks": "MIL",
+    "bucks": "MIL",
     "minnesota timberwolves": "MIN",
+    "timberwolves": "MIN",
     "new orleans pelicans": "NOP",
+    "pelicans": "NOP",
     "new york knicks": "NYK",
+    "knicks": "NYK",
     "oklahoma city thunder": "OKC",
+    "thunder": "OKC",
     "orlando magic": "ORL",
+    "magic": "ORL",
     "philadelphia 70 sixers": "PHI",
+    "70 sixers": "PHI",
     "phoenix suns": "PHX",
-    "portland Trail blazers": "POR",
+    "suns": "PHX",
+    "portland trail blazers": "POR",
+    "trail blazers": "POR",
+    "blazers": "POR",
+    "blazers": "POR",
     "sacramento kings": "SAC",
+    "kings": "SAC",
     "san antonio spurs": "SAS",
+    "spurs": "SAS",
     "toronto raptors": "TOR",
+    "raptors": "TOR",
     "utah jazz": "UTA",
-    "washington wizards": "WAS"
+    "jazz": "UTA",
+    "washington wizards": "WAS",
+    "wizards": "WAS"
 }
 
 
@@ -78,11 +110,8 @@ const handlers = {
 };
 
 
-
-// function injuries
-
-
 function getTeamCode(teamName) {
+    // console.log("finding team code for: " + teamName.toLowerCase());
     const teamCode = TEAM_CODE[teamName.toLowerCase()];
     return teamCode;
 }
