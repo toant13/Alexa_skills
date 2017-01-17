@@ -1,0 +1,32 @@
+{
+  "session": {
+    "sessionId": "SessionId.0449e536-df6b-4f1b-a742-a826bd3d0f2e",
+    "application": {
+      "applicationId": "amzn1.ask.skill.a43030db-980d-4f62-8b87-463419f67670"
+    },
+    "attributes": {},
+    "user": {
+      "userId": "amzn1.ask.account.AHFCSP2YDRMMJJE6OLJMAERFQR5WSQEPQ6635R2QB3AYVWAFGEYSCABUBLUG5AL3ASLLPRWJCANR6H4FDOLCKGDDQVYIXEKIUIGLQS644QOZUQGXTLALGN7EGXQN6CQXDHS6OIHHG4Q6BXJPZDMVQW2W2XDEQIYWPLDTGBIGJ7FJOBE2PRFRBM5WMNI4KZTPFGCALK7DBFXQW5Y"
+    },
+    "new": true
+  },
+  "request": {
+    "type": "IntentRequest",
+    "requestId": "EdwRequestId.b9cb3f74-1f64-4ccb-a24c-da25ccaa01d0",
+    "locale": "en-US",
+    "timestamp": "2017-01-17T00:57:47Z",
+    "intent": {
+      "name": "GetTeamInjuries",
+      "slots": {
+        "team": {
+          "name": "team",
+          "value": "Philadelphia 70 sixers"
+        },
+        "day": {
+          "name": "day"
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
