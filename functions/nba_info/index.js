@@ -138,7 +138,7 @@ function parseInjuriesJson(inst, body, teamName, callback) {
 
             callback('The ' + teamName + ' have the following injuries, ' + speechOutput, inst);
         } else {
-            callback(teamName + ' does not have any injuries.', inst);
+            callback('The ' teamName + ' do not have any injuries.', inst);
         }
     });
 }
