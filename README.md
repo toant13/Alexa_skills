@@ -1,5 +1,3 @@
-# Alexa custom skill
+# Alexa custom skills
 
-#### To invoke the function from `Apex` framework locally:
-
-`apex invoke nba_info < testAssets/GetTeamInjuries.json`
+This repo contains all the custom Alexa skils I've created
