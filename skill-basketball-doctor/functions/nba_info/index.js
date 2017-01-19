@@ -175,6 +175,10 @@ const handlers = {
         console.log('AMAZON.StopIntent');
         this.emit(':tell', 'Ok, this was a good basketball check-up. See you next time!');
     },
+    "AMAZON.NoIntent": function () {
+        console.log('AMAZON.NoIntent');
+        this.emit(':tell', 'Ok, this was a good basketball check-up. See you next time!');
+    },
     'AMAZON.YesIntent': function() {
         this.emit(':ask', 'Okay! What team would you like to check injuries for?',
             'Please tell me the team');
@@ -183,7 +187,7 @@ const handlers = {
         this.emit(':tell', 'No problem, see you again!');
     },
     'AMAZON.HelpIntent': function() {
-        this.emit(':ask', 'You can say a phrase like, who\'s injured on the Phoenix Suns, or tell me who\'s hurt on the mavericks',
+        this.emit(':ask', 'You can say a phrase like, who\'s injured on the Phoenix Suns, or tell me who\'s hurt on the mavericks, you can also cancel when you\'re done, so how can I help you find team injuries?',
             'Please tell me the team');
     },
     'GetInjuries': function() {
