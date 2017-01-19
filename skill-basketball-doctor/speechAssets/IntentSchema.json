@@ -10,15 +10,6 @@
       ]
     },
     {
-      "intent": "GetNextEventIntent",
-      "slots": [
-        {
-          "name": "team",
-          "type": "LIST_OF_NBA_TEAMS"
-        }
-      ]
-    },
-    {
       "intent": "AMAZON.StopIntent"
     },
     {
