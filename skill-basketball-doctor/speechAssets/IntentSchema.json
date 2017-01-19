@@ -6,12 +6,27 @@
         {
           "name": "team",
           "type": "LIST_OF_NBA_TEAMS"
-        },
-        {
-          "name": "day",
-          "type": "AMAZON.DATE"
         }
       ]
+    },
+    {
+      "intent": "GetNextEventIntent",
+      "slots": [
+        {
+          "name": "team",
+          "type": "LIST_OF_NBA_TEAMS"
+        }
+      ]
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    },
+    {
+      "intent": "AMAZON.CancelIntent"
+    },
+    {
+      "intent": "AMAZON.YesIntent",
+      "slots": []
     }
   ]
 }

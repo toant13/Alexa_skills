@@ -15,66 +15,126 @@ const URL_BASE = 'https://www.fantasybasketballnerd.com/service/';
 
 const TEAM_CODE = {
     "atlanta hawks": "ATL",
+    "atlanta": "ATL",
     "hawks": "ATL",
     "brooklyn nets": "BKN",
+    "brooklyn": "BKN",
     "nets": "BKN",
     "boston celtics": "BOS",
+    "boston": "BOS",
     "celtics": "BOS",
     "charlotte hornets": "CHA",
+    "charlotte": "CHA",
     "hornets": "CHA",
     "chicago bulls": "CHI",
+    "chicago": "CHI",
     "bulls": "CHI",
     "cleveland cavaliers": "CLE",
+    "cleveland": "CLE",
     "cavaliers": "CLE",
     "dallas mavericks": "DAL",
+    "dallas": "DAL",
     "mavericks": "DAL",
     "denver nuggets": "DEN",
+    "denver": "DEN",
     "nuggets": "DEN",
     "detroit pistons": "DET",
+    "detroit": "DET",
     "pistons": "DET",
     "golden state warriors": "GSW",
+    "golden state": "GSW",
     "warriors": "GSW",
     "houston rockets": "HOU",
+    "houston": "HOU",
     "rockets": "HOU",
     "indiana pacers": "IND",
+    "indiana": "IND",
     "pacers": "IND",
     "los angeles clippers": "LAC",
     "clippers": "LAC",
     "los angeles lakers": "LAL",
     "lakers": "LAL",
     "memphis grizzlies": "MEM",
+    "memphis": "MEM",
     "grizzlies": "MEM",
     "miami heat": "MIA",
+    "miami": "MIA",
     "heat": "MIA",
     "milwaukee bucks": "MIL",
+    "milwaukee": "MIL",
     "bucks": "MIL",
     "minnesota timberwolves": "MIN",
+    "minnesota": "MIN",
     "timberwolves": "MIN",
+    "t-wolves": "MIN",
     "new orleans pelicans": "NOP",
+    "new orleans": "NOP",
     "pelicans": "NOP",
     "new york knicks": "NYK",
+    "new york": "NYK",
     "knicks": "NYK",
     "oklahoma city thunder": "OKC",
+    "oklahoma city": "OKC",
     "thunder": "OKC",
     "orlando magic": "ORL",
+    "orlando": "ORL",
     "magic": "ORL",
     "philadelphia 70 sixers": "PHI",
+    "philadelphia": "PHI",
     "70 sixers": "PHI",
     "phoenix suns": "PHX",
+    "phoenix": "PHX",
     "suns": "PHX",
     "portland trail blazers": "POR",
+    "portland": "POR",
     "trail blazers": "POR",
     "blazers": "POR",
     "sacramento kings": "SAC",
+    "sacramento": "SAC",
     "kings": "SAC",
     "san antonio spurs": "SAS",
+    "san antonio": "SAS",
     "spurs": "SAS",
     "toronto raptors": "TOR",
+    "toronto": "TOR",
     "raptors": "TOR",
     "utah jazz": "UTA",
+    "utah": "UTA",
     "jazz": "UTA",
     "washington wizards": "WAS",
+    "washington": "WAS",
     "wizards": "WAS"
+}
+
+const CITY_MAP = {
+    "atlanta": "hawks",
+    "brooklyn": "nets",
+    "boston": "celtics",
+    "charlotte": "hornets",
+    "chicago": "bulls",
+    "cleveland": "cavaliers",
+    "dallas": "mavericks",
+    "denver": "nuggets",
+    "detroit": "pistons",
+    "golden state": "warriors",
+    "houston": "rockets",
+    "indiana": "pacers",
+    "memphis": "grizzlies",
+    "miami": "heat",
+    "milwaukee": "bucks",
+    "minnesota": "timberwolves",
+    "new orleans": "pelicans",
+    "new york": "knicks",
+    "oklahoma city": "thunder",
+    "orlando": "magic",
+    "philadelphia": "70 sixers",
+    "phoenix": "suns",
+    "portland": "trail blazers",
+    "sacramento": "kings",
+    "san antonio": "spurs",
+    "toronto": "raptors",
+    "utah": "jazz",
+    "washington ": "wizards"
 }
 
 
@@ -93,39 +153,62 @@ function sonicsEasterEgg(inst, team) {
     const teamNameLowerCase = team.toLowerCase();
     if (teamNameLowerCase === 'seattle supersonics' || teamNameLowerCase === 'seattle sonics' || teamNameLowerCase === 'sonics') {
         console.log('are supersonics');
-        inst.emit(':tellWithCard', 'ha-ha-ha-ha very funny. I miss the sonics so much.  Gary Payton is my favorite player of all time', "Sonic Easter Egg", 'sonics easter egg');
+        inst.emit(':askWithCard', 'ha-ha-ha-ha very funny. I miss the sonics so much.  Gary Payton is my favorite player of all time.  Can you please name another team?', "Sonic Easter Egg", 'sonics easter egg');
     }
 }
 
 const handlers = {
     'LaunchRequest': function() {
-        this.emit('GetInjuries');
+        console.log('LaunchRequest function');
+
+        this.emit(':ask', 'Welcome to basketball doctor. What team would you like to check injuries for?',
+            'Please tell me the team');
     },
     'GetTeamInjuries': function() {
+        console.log('Team injuries');
+
         this.emit('GetInjuries');
     },
+    'AMAZON.StopIntent': function() {
+        console.log('AMAZON.StopIntent');
+        this.emit(':tell', 'Ok, this was a good basketball check-up. See you next time!');
+    },
+    'AMAZON.YesIntent': function() {
+        this.emit(':ask', 'Okay! What team would you like to check injuries for?',
+            'Please tell me the team');
+    },
+    'AMAZON.CancelIntent': function() {
+        this.emit(':tell', 'No problem, see you again!');
+    },
     'GetInjuries': function() {
-        const team = this.event.request.intent.slots.team.value
+        let team = this.event.request.intent.slots.team.value
+
+        if (!team) {
+            this.emit(':ask', ' I\'m sorry can you repeat the team?',
+                'Please tell me the team');
+        }
+
+        console.log('is it a city? ' + CITY_MAP[team.toLowerCase()]);
+
+        if (CITY_MAP[team.toLowerCase()]) {
+            team = CITY_MAP[team.toLowerCase()];
+        }
+
         console.log('The given team is: ' + team);
 
         sonicsEasterEgg(this, team);
 
         getTeamInjuries(this, team, (speechOutput, inst) => {
-            inst.emit(':tellWithCard', speechOutput, "List of injuries for this team", speechOutput);
+            inst.emit(':askWithCard', speechOutput + 'would you like to check another team?', 'Sorry, I didn\'t here you, do you want to check another team?', "List of injuries for this team", speechOutput);
         });
     }
 };
 
 
 function getTeamCode(teamName) {
-    // console.log("finding team code for: " + teamName.toLowerCase());
+    console.log('finding team code for: ' + teamName.toLowerCase());
     const teamCode = TEAM_CODE[teamName.toLowerCase()];
     return teamCode;
-}
-
-
-function getSchedule(teamName, date) {
-
 }
 
 function getTeamInjuries(inst, teamName, eventCallback) {
@@ -148,6 +231,7 @@ function getTeamInjuries(inst, teamName, eventCallback) {
         });
     }).on('error', function(e) {
         console.error('Got error: ' + e + ' trying to GET at: ' + url);
+        this.emit(':tell', 'I\'m sorry I can look up any injuries right now, Try again later');
     });
 }
 
@@ -155,7 +239,8 @@ function parseInjuriesJson(inst, body, teamName, callback) {
     const teamCode = getTeamCode(teamName);
 
     if (!teamCode) {
-        callback('Sorry I cannot find the team name you have given ' + teamName + ' please try again', inst);
+        inst.emit(':ask', ' I\'m sorry can you repeat the team? I heard ' + teamName + ' I can\'t find that basketball team',
+            'Please tell me the team');
     }
 
     console.log('parseInjuries team code is: ' + teamCode + ' for team code: ' + teamName);
@@ -175,7 +260,7 @@ function parseInjuriesJson(inst, body, teamName, callback) {
 
             callback('The ' + teamName + ' have the following injuries, ' + speechOutput, inst);
         } else {
-            callback('The ' + teamName + ' do not have any injuries.', inst);
+            callback('The ' + teamName + ' do not have any injuries,', inst);
         }
     });
 }
@@ -183,14 +268,9 @@ function parseInjuriesJson(inst, body, teamName, callback) {
 function formatInjurieSpeechOutput(playersArray) {
     let speechOutput = '';
     playersArray.forEach(function(player) {
-        speechOutput += player.name[0] + ' with ' + player.injury[0] + ', '
+        speechOutput += player.name[0] + ' with ' + player.injury[0] + ', he\'s ' + player.notes[0] + ','
     });
 
     console.log('speechOutput is: ' + speechOutput);
     return speechOutput;
-}
-
-
-function getTeamDepthChart(teamName) {
-
 }
