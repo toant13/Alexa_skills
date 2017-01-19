@@ -1,5 +1,9 @@
 # Basketball Doctor
 
+
+<img src="https://github.com/toant13/Alexa_skills/blob/master/skill-basketball-doctor/publishingAssets/basket_ball_doctor_logo_large.jpg?raw=true">
+
+
 This skill allows you to list all the  injured players for the team you're interested in.
 
 ## Example Interaction
