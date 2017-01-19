@@ -201,7 +201,7 @@ const handlers = {
         sonicsEasterEgg(this, team);
 
         getTeamInjuries(this, team, (speechOutput, inst) => {
-            inst.emit(':askWithCard', speechOutput + 'would you like to check another team?', 'Sorry, I didn\'t here you, do you want to check another team?', "List of injuries for this team", speechOutput);
+            inst.emit(':askWithCard', speechOutput + 'would you like to check injuries for another team?', 'Sorry, I didn\'t here you, do you want to check another team?', "List of injuries for this team", speechOutput);
         });
     }
 };
