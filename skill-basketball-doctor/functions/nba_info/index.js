@@ -182,6 +182,10 @@ const handlers = {
     'AMAZON.CancelIntent': function() {
         this.emit(':tell', 'No problem, see you again!');
     },
+    'AMAZON.HelpIntent': function() {
+        this.emit(':ask', 'You can say a phrase like, who\'s injured on the Phoenix Suns, or tell me who\'s hurt on the mavericks',
+            'Please tell me the team');
+    },
     'GetInjuries': function() {
         let team = this.event.request.intent.slots.team.value
 

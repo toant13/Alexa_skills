@@ -16,6 +16,8 @@ AMAZON.StopIntent nope
 AMAZON.StopIntent no thanks
 AMAZON.StopIntent no thank you
 
-
 AMAZON.CancelIntent cancel
-AMAZON.CancelIntent stop
+
+AMAZON.HelpIntent help
+AMAZON.HelpIntent help me
+AMAZON.HelpIntent what can I ask you 
