@@ -11,13 +11,10 @@ AMAZON.YesIntent ok
 AMAZON.YesIntent sure
 AMAZON.YesIntent alright
 
-AMAZON.StopIntent no
-AMAZON.StopIntent nope
-AMAZON.StopIntent no thanks
-AMAZON.StopIntent no thank you
+AMAZON.NoIntent no
 
 AMAZON.CancelIntent cancel
 
 AMAZON.HelpIntent help
 AMAZON.HelpIntent help me
-AMAZON.HelpIntent what can I ask you 
+AMAZON.HelpIntent what can I ask you
