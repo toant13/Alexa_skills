@@ -1,0 +1,12 @@
+{
+  "name": "journal",
+  "version": "1.0.0",
+  "description": "Take 10 sec journal",
+  "main": "index.js",
+  "keywords": [
+    "alexa",
+    "skill",
+    "nba"
+  ],
+  "author": "Tony Tran",
+}

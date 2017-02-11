@@ -5,4 +5,5 @@
   "timeout": 5,
   "role": "arn:aws:iam::893483352847:role/ten_sec_journal_lambda_function",
   "environment": {}
+  "handler": "index.handle"
 }
