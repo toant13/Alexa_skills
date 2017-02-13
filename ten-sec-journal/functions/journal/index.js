@@ -11,37 +11,52 @@ console.log('Starting ten second journal');
 exports.handle = function(e, ctx, cb) {
 	console.log('Processing event: %j', e);
 
-
+	const alexa = Alexa.handler(event, context);
+	alexa.appId = APP_ID;
+	alexa.registerHandlers(handlers);
+	alexa.execute();
 	const dynamodb = new AWS.DynamoDB({
 		apiVersion: '2012-08-10'
 	});
 
-	if (dynamodb) {
-		cb(null, {
-			hello: 'we good'
-		});
-	} else {
-		cb(null, {
-			hello: 'nope'
-		});
-	}
+	dynamodb.putItem({
+		"TableName": 'journal',
+		"Item": {
+			"userId": {
+				"S": '3242343'
+			}
+		}
+	}, function(err, data) {
+		if (err) {
+			const errorMessage = JSON.stringify(err, null, '');
+			console.log('put error ' + errorMessage);
+
+			cb(null, {
+				hello: errorMessage
+			});
+		} else {
+			const dataMessage = JSON.stringify(data, null, '');
+			console.log('great success: ' + dataMessage);
+			cb(null, {
+				hello: dataMessage
+			});
+		}
+	});
 
 
-	// const alexa = Alexa.handler(event, context);
-	// alexa.appId = APP_ID;
-	// alexa.registerHandlers(handlers);
-	// alexa.execute();
+
+	
 
 
 
 }
 
 
-// const handlers = {
-// 	'LaunchRequest': function() {
-//         console.log('LaunchRequest function');
+const handlers = {
+	'LaunchRequest': function() {
+		console.log('LaunchRequest function');
 
-//         this.emit(':ask', 'Welcome to ten seccond journal. Please tell me your ten second journal entry for today?',
-//             'Please tell me your journal entry');
-//     }
-// }
+		this.emit(':ask', 'Welcome to ten seccond journal. Please tell me your ten second journal entry for today?',
+			'Please tell me your journal entry');
+	}
+}
