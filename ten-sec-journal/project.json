@@ -4,6 +4,6 @@
   "memory": 128,
   "timeout": 5,
   "role": "arn:aws:iam::893483352847:role/ten_sec_journal_lambda_function",
-  "environment": {}
+  "environment": {},
   "handler": "index.handle"
 }
