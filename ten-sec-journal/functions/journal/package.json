@@ -6,12 +6,12 @@
   "keywords": [
     "alexa",
     "skill",
-    "journal",
+    "journal"
 
   ],
   "author": "Tony Tran",
    "dependencies": {
     "alexa-sdk": "^1.0.6",
-    "lodash": "^4.17.4",
+    "lodash": "^4.17.4"
   }
 }
