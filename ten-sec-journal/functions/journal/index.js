@@ -1,21 +1,30 @@
-// "use strict";
-// const APP_ID = 'amzn1.ask.skill.46a0552d-4087-4cef-b615-093cad2ff9ae';
+"use strict";
+const APP_ID = 'amzn1.ask.skill.46a0552d-4087-4cef-b615-093cad2ff9ae';
 
-// const Alexa = require("alexa-sdk");
-// const _ = require('lodash');
-// const dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+const Alexa = require("alexa-sdk");
+const AWS = require("aws-sdk");
+const _ = require('lodash');
 
 
-// console.log('Starting ten second journal');
+
+console.log('Starting ten second journal');
 exports.handle = function(e, ctx, cb) {
 	console.log('Processing event: %j', e);
 
 
-	// if(dynamodb){
-	// 	console.log('we good');
-	// } else {
-	// 	console.log('nope');
-	// }
+	const dynamodb = new AWS.DynamoDB({
+		apiVersion: '2012-08-10'
+	});
+
+	if (dynamodb) {
+		cb(null, {
+			hello: 'we good'
+		});
+	} else {
+		cb(null, {
+			hello: 'nope'
+		});
+	}
 
 
 	// const alexa = Alexa.handler(event, context);
@@ -25,9 +34,6 @@ exports.handle = function(e, ctx, cb) {
 
 
 
-	cb(null, {
-		hello: 'world'
-	});
 }
 
 
